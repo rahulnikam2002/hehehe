@@ -35,11 +35,13 @@ const chatSchema = new mongoose.Schema({
 
 const Chat = mongoose.model("Chat", chatSchema);
 
-const __dirname1 = path.resolve();
-app.use(express.static(path.join(__dirname1, "/client/build")));
+// Serve static files from the client/build directory
+const clientBuildPath = path.join(__dirname, "../client/build");
+app.use(express.static(clientBuildPath));
 
+// Send the index.html file for any other requests
 app.get("*", (req, res) => {
-    res.sendFile(path.resolve(__dirname1, "..", "client", "build", "index.html"));
+    res.sendFile(path.join(clientBuildPath, "index.html"));
 });
 
 // Socket.IO setup
